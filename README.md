@@ -10,7 +10,7 @@ docker-kill [OPTIONS] CONTAINER [CONTAINER, ...]
 - `-signal`  Signal to send to the container (Default: KILL)
 
 
-## Examples
+### Examples
 ```sh
 docker-kill 8e2db5361c6
 ```
