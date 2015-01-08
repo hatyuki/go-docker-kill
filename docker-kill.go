@@ -1,45 +1,12 @@
-package main
+package dockerkill
 
 import (
 	"errors"
-	"flag"
 	"fmt"
-	"log"
 	"os"
-	"strings"
 
 	dockerapi "github.com/fsouza/go-dockerclient"
 )
-
-func main() {
-	os.Exit(run())
-}
-
-func run() int {
-	var signal = flag.String("signal", "KILL", "Signal to send to the container")
-	flag.Parse()
-	*signal = strings.ToUpper(*signal)
-
-	if flag.NArg() == 0 {
-		fmt.Fprintf(os.Stderr, "Usage: docker-kill [OPTION] CONTAINER [CONTAINER, ...]\n\n")
-		fmt.Fprintf(os.Stderr, "Kill a running container using SIGKILL or a specified signal\n\n")
-		flag.PrintDefaults()
-		return 1
-	}
-
-	errors := 0
-
-	for _, container_id := range flag.Args() {
-		if err := KillContainer(container_id, *signal); err == nil {
-			log.Printf("Send signal %s to %s\n", *signal, container_id)
-		} else {
-			log.Printf("[ERROR] %s", err)
-			errors++
-		}
-	}
-
-	return errors
-}
 
 func KillContainer(container_id, signal string) error {
 	client, err := makeDockerClient()

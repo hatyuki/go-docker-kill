@@ -1,2 +1,2 @@
 .*.sw[a-z]
-docker-kill
+./docker-kill
